@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>简易音乐播放器</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 40px;
+      background: #fafafa;
+    }
+    #playBtn {
+      padding: 10px 20px;
+      font-size: 18px;
+      background: #4676fa;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #audioContainer {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>简易音乐播放器</h1>
+  <button id="playBtn">Play</button>
+  <input id="fileInput" type="file" accept="audio/*" style="display:none">
+  <div id="audioContainer"></div>
+
+  <script>
+    const playBtn = document.getElementById('playBtn');
+    const fileInput = document.getElementById('fileInput');
+    const audioContainer = document.getElementById('audioContainer');
+
+    playBtn.addEventListener('click', function() {
+      fileInput.value = ''; // 清空之前的选择
+      fileInput.click();
+    });
+
+    fileInput.addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const audioURL = URL.createObjectURL(file);
+
+        // 清除之前的播放器
+        audioContainer.innerHTML = '';
+
+        // 创建audio元素
+        const audioElem = document.createElement('audio');
+        audioElem.src = audioURL;
+        audioElem.controls = true;
+        audioElem.autoplay = true;
+
+        audioContainer.appendChild(audioElem);
+      }
+    });
+  </script>
+</body>
+</html>
